@@ -1,459 +1,420 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>포헤르츠 버블세럼 Guideline</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
-
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      font-family: 'Noto Sans KR', 'Malgun Gothic', sans-serif;
-      background: #f0f8ff;
-      color: #2d2d2d;
+      font-family: Pretendard, -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Segoe UI", Roboto, sans-serif;
+      background: #F4F8FB;
+      color: #2E3D4A;
+      line-height: 1.6;
       min-height: 100vh;
     }
 
-    /* ── Hero ── */
-    .hero {
-      background: linear-gradient(135deg, #a8d8f0 0%, #6bbde3 55%, #3a9ecf 100%);
-      color: white;
-      text-align: center;
-      padding: 60px 24px 50px;
-      position: relative;
-      overflow: hidden;
-    }
-    .hero::before {
-      content: '';
-      position: absolute;
-      top: -40px; right: -40px;
-      width: 200px; height: 200px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.1);
-    }
-    .hero::after {
-      content: '';
-      position: absolute;
-      bottom: -60px; left: -30px;
-      width: 260px; height: 260px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.07);
-    }
-    .hero-badge {
-      display: inline-block;
-      background: rgba(255,255,255,0.25);
-      border: 1px solid rgba(255,255,255,0.5);
-      border-radius: 20px;
-      padding: 5px 18px;
-      font-size: 12px;
-      font-weight: 600;
-      letter-spacing: 0.5px;
-      margin-bottom: 20px;
-    }
-    .hero h1 {
-      font-size: clamp(22px, 5vw, 34px);
-      font-weight: 700;
-      line-height: 1.3;
-    }
-
-    /* ── Layout ── */
-    .container {
-      max-width: 780px;
+    .page {
+      max-width: 600px;
       margin: 0 auto;
-      padding: 0 20px 60px;
+      padding: 2rem 1rem 4rem;
     }
 
-    /* ── Section ── */
-    .section {
-      background: white;
-      border-radius: 16px;
-      box-shadow: 0 2px 16px rgba(58,158,207,0.1);
-      margin-top: 28px;
+    /* ── Hero ── */
+    .hero-banner {
+      position: relative;
+      width: 100%;
+      background: #EEF6FB;
+      border-radius: 20px;
       overflow: hidden;
+      margin-bottom: 1.5rem;
+      border: 1px solid #C9E4F2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 24px 44px;
+      box-shadow: 0 4px 20px rgba(72, 160, 210, 0.08);
     }
-    .section-header {
-      background: linear-gradient(90deg, #6bbde3, #3a9ecf);
-      color: white;
-      padding: 14px 24px;
-      font-size: 15px;
+    .hero-banner::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; width: 100%; height: 28px;
+      background: #6BB8DC;
+      opacity: 0.18;
+    }
+    .hero-tag {
+      display: inline-block;
+      font-size: 11px;
       font-weight: 700;
+      letter-spacing: 0.04em;
+      padding: 5px 12px;
+      border-radius: 6px;
+      background: #DFF0FA;
+      color: #3A90C0;
+      border: 1px solid #B8DDEF;
+      margin-bottom: 14px;
+    }
+    .hero-banner h2 {
+      font-size: 22px;
+      font-weight: 800;
+      color: #3A90C0;
+      margin-bottom: 10px;
+      line-height: 1.4;
+      letter-spacing: -0.5px;
+      text-align: center;
+    }
+    .hero-banner p {
+      font-size: 12px;
+      color: #7AAEC8;
+      line-height: 1.7;
+      text-align: center;
+    }
+
+    /* ── Card ── */
+    .ux-card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 24px 20px;
+      margin-bottom: 16px;
+      box-shadow: 0 2px 12px rgba(72, 160, 210, 0.07);
+      border: 1px solid #E4F0F8;
+    }
+    .card-title {
+      font-size: 15px;
+      font-weight: 800;
+      color: #3A90C0;
       display: flex;
       align-items: center;
       gap: 8px;
+      margin-bottom: 16px;
     }
-    .section-header .icon { font-size: 18px; }
-    .section-body { padding: 20px 24px; }
 
-    /* ── Info rows ── */
-    .info-table { width: 100%; border-collapse: collapse; }
-    .info-table tr:not(:last-child) td { border-bottom: 1px solid #daeef8; }
-    .info-table td {
-      padding: 13px 16px;
-      font-size: 14px;
-      vertical-align: top;
-    }
-    .info-table .label {
-      background: #edf6fc;
-      color: #2580b3;
-      font-weight: 600;
-      width: 130px;
-      white-space: nowrap;
-      border-right: 2px solid #c5e4f5;
-    }
-    .info-table .value { color: #2d2d2d; line-height: 1.6; }
-    .info-table tr.highlight .label { background: #d6eef8; }
-    .info-table tr.highlight .value { background: #f0f8ff; font-weight: 500; color: #2580b3; }
-
-    /* ── Hashtags ── */
-    .hashtag-box {
-      background: linear-gradient(135deg, #e8f4fb, #d0eaf7);
-      border: 1px solid #b0d8f0;
+    /* ── Inner box ── */
+    .ux-inner-box {
+      background: #F6FAFD;
       border-radius: 12px;
-      padding: 20px;
-      text-align: center;
-    }
-    .hashtag-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      justify-content: center;
-      margin-top: 4px;
-    }
-    .hashtag {
-      background: white;
-      color: #3a9ecf;
-      border: 1.5px solid #6bbde3;
-      border-radius: 20px;
-      padding: 7px 18px;
-      font-size: 14px;
-      font-weight: 600;
+      padding: 18px;
+      border: 1px solid #E0EEF8;
     }
 
-    /* ── Account chips ── */
-    .account-chips { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 4px; }
-    .account-chip {
-      background: #edf6fc;
-      border: 1.5px solid #90cfe8;
-      border-radius: 20px;
-      padding: 8px 20px;
-      font-size: 14px;
-      font-weight: 600;
-      color: #1a5c8a;
+    /* ── List ── */
+    .state-group { margin-bottom: 20px; }
+    .state-group:last-child { margin-bottom: 0; }
+
+    .state-title {
       display: flex;
       align-items: center;
-      gap: 6px;
-    }
-
-    /* ── Links ── */
-    .link-card {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      background: #edf6fc;
-      border: 1px solid #c5e4f5;
-      border-radius: 12px;
-      padding: 14px 18px;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #2E3D4A;
       margin-bottom: 10px;
-      text-decoration: none;
-      color: inherit;
-      transition: background 0.2s, box-shadow 0.2s;
     }
-    .link-card:hover {
-      background: #d6eef8;
-      box-shadow: 0 4px 16px rgba(58,158,207,0.15);
-    }
-    .link-card:last-child { margin-bottom: 0; }
-    .link-icon {
-      width: 40px; height: 40px;
-      border-radius: 10px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 20px;
+    .state-icon {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      font-size: 11px;
       flex-shrink: 0;
     }
-    .link-icon.instagram { background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
-    .link-icon.youtube { background: #ff0000; }
-    .link-icon.shop { background: linear-gradient(135deg, #6bbde3, #3a9ecf); }
-    .link-meta { flex: 1; }
-    .link-label { font-size: 13px; font-weight: 600; color: #2d2d2d; margin-bottom: 2px; }
-    .link-url { font-size: 11px; color: #999; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 460px; }
-    .link-arrow { color: #3a9ecf; font-size: 18px; }
+    .icon-req  { background: #3A90C0; color: #fff; }
+    .icon-pro  { background: #E2EDF5; color: #7AAEC8; }
+    .icon-rec  { background: #C9E6F5; color: #2A7AA8; }
+    .icon-num  { background: #fff; border: 1.5px solid #3A90C0; color: #3A90C0; font-weight: 700; font-size: 11px; }
 
-    /* ── Notice box ── */
-    .notice-box {
-      background: linear-gradient(135deg, #f0f8ff, #e0f0fa);
-      border-left: 4px solid #6bbde3;
-      border-radius: 0 12px 12px 0;
-      padding: 16px 20px;
+    .state-list { list-style: none; padding-left: 28px; }
+    .state-list li {
+      font-size: 13px;
+      color: #4D6A7D;
+      line-height: 1.65;
+      margin-bottom: 5px;
+      position: relative;
+    }
+    .state-list li::before {
+      content: "-";
+      position: absolute;
+      left: -12px;
+      color: #A8CEDE;
+    }
+    .state-para {
+      font-size: 13px;
+      color: #2E3D4A;
+      line-height: 1.65;
+      padding-left: 28px;
+    }
+
+    /* ── Pills ── */
+    .pill-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding-left: 28px;
       margin-top: 8px;
     }
-    .notice-item {
-      display: flex;
-      gap: 10px;
-      font-size: 14px;
-      line-height: 1.7;
-      color: #1a3a5a;
-      margin-bottom: 10px;
-    }
-    .notice-item:last-child { margin-bottom: 0; }
-    .notice-dot { color: #3a9ecf; font-size: 18px; flex-shrink: 0; margin-top: 1px; }
-
-    /* ── Product highlight ── */
-    .product-card {
-      background: linear-gradient(135deg, #f0f8ff, #e0f0fa);
-      border: 1.5px solid #b0d8f0;
-      border-radius: 14px;
-      padding: 20px;
+    .copy-pill {
       display: flex;
       align-items: center;
-      gap: 16px;
-    }
-    .product-emoji { font-size: 40px; }
-    .product-info .name { font-size: 15px; font-weight: 700; color: #2d2d2d; margin-bottom: 4px; }
-    .product-info .sub { font-size: 13px; color: #999; }
-    .product-btn {
-      display: inline-block;
-      margin-top: 12px;
-      background: linear-gradient(135deg, #6bbde3, #3a9ecf);
-      color: white;
-      text-decoration: none;
-      padding: 9px 22px;
+      gap: 5px;
+      background: #fff;
+      border: 1px solid #C9E4F2;
+      padding: 5px 12px;
       border-radius: 20px;
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 600;
-      transition: opacity 0.2s;
+      color: #3A6F8F;
+      cursor: pointer;
+      transition: background 0.15s;
     }
-    .product-btn:hover { opacity: 0.85; }
+    .copy-pill:hover { background: #DFF0FA; }
+    .copy-icon { opacity: 0.45; font-size: 11px; color: #3A90C0; }
 
-    /* ── Fee badge ── */
-    .fee-badge {
+    /* ── Hashtag pills (no copy) ── */
+    .hashtag-pill {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      background: linear-gradient(135deg, #6bbde3, #3a9ecf);
-      color: white;
-      border-radius: 12px;
-      padding: 10px 20px;
-      font-size: 18px;
-      font-weight: 700;
-      margin-bottom: 4px;
-    }
-    .fee-sub { font-size: 13px; color: #999; }
-
-    /* ── Sub label ── */
-    .sub-label { font-size: 13px; font-weight: 600; color: #2580b3; margin-bottom: 12px; }
-
-    /* ── Footer ── */
-    .footer {
-      text-align: center;
-      padding: 32px 20px;
+      gap: 5px;
+      background: #fff;
+      border: 1px solid #C9E4F2;
+      padding: 5px 12px;
+      border-radius: 20px;
       font-size: 12px;
-      color: #bbb;
+      font-weight: 600;
+      color: #3A90C0;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .hashtag-pill:hover { background: #DFF0FA; }
+
+    /* ── Notice ── */
+    .notice {
+      background: #EAF4FA;
+      border-radius: 8px;
+      padding: 13px 14px;
+      font-size: 12px;
+      font-weight: 500;
+      color: #3A7FA8;
+      margin-top: 16px;
+      display: flex;
+      gap: 8px;
+      line-height: 1.55;
+      border: 1px solid #C9E4F2;
     }
 
-    @media (max-width: 500px) {
-      .info-table .label { width: 90px; font-size: 13px; }
-      .product-card { flex-direction: column; text-align: center; }
+    /* ── Ref links ── */
+    .ref-group-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: #4D7A93;
+      margin-bottom: 6px;
+      padding-left: 28px;
+    }
+    .ref-link {
+      display: block;
+      font-size: 12px;
+      color: #3A90C0;
+      text-decoration: none;
+      padding-left: 28px;
+      margin-bottom: 5px;
+      word-break: break-all;
+    }
+    .ref-link:hover { text-decoration: underline; color: #2A70A0; }
+
+    /* ── Product link ── */
+    .product-link-box {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: #fff;
+      border: 1px solid #C9E4F2;
+      border-radius: 10px;
+      padding: 14px 16px;
+      text-decoration: none;
+      color: inherit;
+      transition: background 0.15s;
+    }
+    .product-link-box:hover { background: #EEF6FB; }
+    .product-link-icon {
+      font-size: 24px;
+      flex-shrink: 0;
+    }
+    .product-link-text .name {
+      font-size: 13px;
+      font-weight: 700;
+      color: #2E3D4A;
+      margin-bottom: 2px;
+    }
+    .product-link-text .sub {
+      font-size: 11px;
+      color: #7AAEC8;
+    }
+    .product-link-arrow {
+      margin-left: auto;
+      color: #3A90C0;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    @media (max-width: 480px) {
+      .hero-banner { padding: 30px 18px 40px; }
+      .hero-banner h2 { font-size: 18px; }
+      .ux-card { padding: 20px 16px; }
+      .ux-inner-box { padding: 14px; }
     }
   </style>
 </head>
 <body>
+<div class="page">
 
-<div class="hero">
-  <div class="hero-badge">쿼드쎄라 × 포헤르츠</div>
-  <h1>포헤르츠 버블세럼<br>Guideline</h1>
-</div>
-
-<div class="container">
-
-  <!-- 1. 브랜드 소개 -->
-  <div class="section">
-    <div class="section-header"><span class="icon">💎</span> 브랜드 소개</div>
-    <div class="section-body">
-      <table class="info-table">
-        <tr class="highlight">
-          <td class="label">브랜드</td>
-          <td class="value">쿼드쎄라 (Quadthera)</td>
-        </tr>
-        <tr>
-          <td class="label">서브 브랜드</td>
-          <td class="value">포헤르츠 (forhz)</td>
-        </tr>
-        <tr>
-          <td class="label">브랜드 소개</td>
-          <td class="value">국내 최대 규모의 뷰티 디바이스 브랜드</td>
-        </tr>
-      </table>
-    </div>
+  <!-- Hero -->
+  <div class="hero-banner">
+    <span class="hero-tag">쿼드쎄라 × 포헤르츠</span>
+    <h2>포헤르츠 버블세럼<br>Guideline</h2>
+    <p>국내 최대 규모 뷰티 디바이스 브랜드 쿼드쎄라와의 협업.<br>포헤르츠(forhz) 브랜드와의 직접 콜라보레이션입니다.</p>
   </div>
 
-  <!-- 2. 캠페인 기본 정보 -->
-  <div class="section">
-    <div class="section-header"><span class="icon">📋</span> 캠페인 기본 정보</div>
-    <div class="section-body">
-      <table class="info-table">
-        <tr class="highlight">
-          <td class="label">콘텐츠 타입</td>
-          <td class="value">🎬 Reels</td>
-        </tr>
-        <tr>
-          <td class="label">업로드 기간</td>
-          <td class="value">📅 4월 마지막 주</td>
-        </tr>
-      </table>
-
-      <div style="margin-top: 20px;">
-        <div style="font-size: 13px; color: #999; margin-bottom: 8px;">협찬 고료</div>
-        <div class="fee-badge">💰 50,000원</div>
-        <div class="fee-sub">계좌 정보는 별도 안내 예정</div>
+  <!-- 캠페인 기본 정보 -->
+  <div class="ux-card">
+    <div class="card-title">🗓️ 캠페인 기본 정보</div>
+    <div class="ux-inner-box">
+      <div class="state-group" style="margin-bottom: 0;">
+        <ul class="state-list">
+          <li>콘텐츠 타입 : Reels</li>
+          <li>고료 : 50,000원</li>
+          <li>업로드 기간 : 4월 마지막 주</li>
+        </ul>
+        <div style="display: flex; flex-wrap: wrap; gap: 6px; padding-left: 28px; margin-top: 12px;">
+          <span style="background: #EEF6FB; border: 1px solid #C9E4F2; padding: 3px 10px; border-radius: 20px; font-size: 10px; font-weight: 600; color: #5A9DBF;">협찬 제공</span>
+          <span style="background: #EEF6FB; border: 1px solid #C9E4F2; padding: 3px 10px; border-radius: 20px; font-size: 10px; font-weight: 600; color: #5A9DBF;">고료 지급</span>
+          <span style="background: #EEF6FB; border: 1px solid #C9E4F2; padding: 3px 10px; border-radius: 20px; font-size: 10px; font-weight: 600; color: #5A9DBF;">추가 협업 기회</span>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- 3. 제품 정보 -->
-  <div class="section">
-    <div class="section-header"><span class="icon">🧴</span> 협찬 제품</div>
-    <div class="section-body">
-      <div class="product-card">
-        <div class="product-emoji">🫧</div>
-        <div class="product-info">
+  <!-- 협찬 제품 -->
+  <div class="ux-card">
+    <div class="card-title">🧴 협찬 제품</div>
+    <div class="ux-inner-box">
+      <a class="product-link-box" href="https://quadthera.com/product/new-%EB%B2%84%EB%B8%94-%ED%8F%AC%ED%97%A4%EB%A5%B4%EC%B8%A0-%ED%9E%88%EC%95%8C%EB%9D%BC%EA%B2%90-%EB%B2%84%EB%B8%94-%EC%84%B8%EB%9F%BC-70ml/347" target="_blank">
+        <div class="product-link-icon">🫧</div>
+        <div class="product-link-text">
           <div class="name">NEW 버블 포헤르츠 히알라겐 버블 세럼 70ml</div>
-          <div class="sub">forhz × Quadthera 공식 제품</div>
-          <a class="product-btn" href="https://quadthera.com/product/new-%EB%B2%84%EB%B8%94-%ED%8F%AC%ED%97%A4%EB%A5%B4%EC%B8%A0-%ED%9E%88%EC%95%8C%EB%9D%BC%EA%B2%90-%EB%B2%84%EB%B8%94-%EC%84%B8%EB%9F%BC-70ml/347" target="_blank">
-            🛒 상품 페이지 바로가기
-          </a>
+          <div class="sub">상품 페이지 바로가기 →</div>
         </div>
-      </div>
+        <div class="product-link-arrow">›</div>
+      </a>
     </div>
   </div>
 
-  <!-- 4. 콘텐츠 요구사항 -->
-  <div class="section">
-    <div class="section-header"><span class="icon">✅</span> 콘텐츠 요구사항</div>
-    <div class="section-body">
+  <!-- 콘텐츠 요구사항 -->
+  <div class="ux-card">
+    <div class="card-title">📷 이렇게 제작해 주세요</div>
+    <div class="ux-inner-box">
 
-      <div style="margin-bottom: 20px;">
-        <div class="sub-label">공동작업자 계정 태그 (필수)</div>
-        <div class="account-chips">
-          <div class="account-chip">📱 @quadthera.official</div>
-          <div class="account-chip">🇯🇵 @quadthera.official_jp</div>
-        </div>
+      <div class="state-group">
+        <div class="state-title"><span class="state-icon icon-req">✔</span>필수사항</div>
+        <ul class="state-list">
+          <li>포헤르츠 버블세럼 제품 영상 내 노출</li>
+          <li>제품의 특징 및 사용감 자연스럽게 표현</li>
+        </ul>
       </div>
 
-      <div>
-        <div class="sub-label">해시태그 (필수)</div>
-        <div class="hashtag-box">
-          <div class="hashtag-list">
-            <span class="hashtag">#쿼드쎼라</span>
-            <span class="hashtag">#포헤르츠</span>
-            <span class="hashtag">#포헤르츠버블세럼</span>
-            <span class="hashtag">#버블세럼</span>
-          </div>
-        </div>
+      <div class="state-group">
+        <div class="state-title"><span class="state-icon icon-rec">👍</span>추천사항</div>
+        <ul class="state-list">
+          <li>실제 사용 루틴에 녹여낸 자연스러운 촬영</li>
+          <li>버블 폼이 올라오는 순간 등 시각적 임팩트 장면 포함</li>
+          <li>본인만의 스킨케어 팁과 함께 소개</li>
+        </ul>
       </div>
 
     </div>
   </div>
 
-  <!-- 5. 레퍼런스 영상 -->
-  <div class="section">
-    <div class="section-header"><span class="icon">🎥</span> 레퍼런스 영상</div>
-    <div class="section-body">
-      <p style="font-size: 13px; color: #888; margin-bottom: 16px;">아래 영상들을 참고하여 콘텐츠를 제작해 주세요.</p>
+  <!-- 업로드 요구사항 -->
+  <div class="ux-card">
+    <div class="card-title">📤 이렇게 업로드해 주세요</div>
+    <div class="ux-inner-box">
 
-      <a class="link-card" href="https://www.instagram.com/p/DUDe4b7kT-S/?hl=ko" target="_blank">
-        <div class="link-icon instagram">📸</div>
-        <div class="link-meta">
-          <div class="link-label">레퍼런스 1 — Instagram</div>
-          <div class="link-url">instagram.com/p/DUDe4b7kT-S</div>
+      <div class="state-group">
+        <div class="state-title"><span class="state-icon icon-num">1</span>공동작업자 연결</div>
+        <div class="pill-container">
+          <div class="copy-pill" data-copy="@quadthera.official">@quadthera.official <span class="copy-icon">❐</span></div>
+          <div class="copy-pill" data-copy="@quadthera.official_jp">@quadthera.official_jp <span class="copy-icon">❐</span></div>
         </div>
-        <div class="link-arrow">›</div>
-      </a>
+      </div>
 
-      <a class="link-card" href="https://www.instagram.com/reels/DCOBYkhJn6g/" target="_blank">
-        <div class="link-icon instagram">📸</div>
-        <div class="link-meta">
-          <div class="link-label">레퍼런스 2 — Instagram Reels</div>
-          <div class="link-url">instagram.com/reels/DCOBYkhJn6g</div>
+      <div class="state-group">
+        <div class="state-title"><span class="state-icon icon-num">2</span>필수 해시태그</div>
+        <div class="pill-container">
+          <div class="hashtag-pill" data-copy="#쿼드쎼라">#쿼드쎼라 <span class="copy-icon">❐</span></div>
+          <div class="hashtag-pill" data-copy="#포헤르츠">#포헤르츠 <span class="copy-icon">❐</span></div>
+          <div class="hashtag-pill" data-copy="#포헤르츠버블세럼">#포헤르츠버블세럼 <span class="copy-icon">❐</span></div>
+          <div class="hashtag-pill" data-copy="#버블세럼">#버블세럼 <span class="copy-icon">❐</span></div>
         </div>
-        <div class="link-arrow">›</div>
-      </a>
+      </div>
 
-      <a class="link-card" href="https://www.instagram.com/p/DUC_CJRE5R4/?hl=ko" target="_blank">
-        <div class="link-icon instagram">📸</div>
-        <div class="link-meta">
-          <div class="link-label">레퍼런스 3 — Instagram</div>
-          <div class="link-url">instagram.com/p/DUC_CJRE5R4</div>
-        </div>
-        <div class="link-arrow">›</div>
-      </a>
-
-      <a class="link-card" href="https://www.instagram.com/p/DTAFy9vkzDG/?hl=ko" target="_blank">
-        <div class="link-icon instagram">📸</div>
-        <div class="link-meta">
-          <div class="link-label">레퍼런스 4 — Instagram</div>
-          <div class="link-url">instagram.com/p/DTAFy9vkzDG</div>
-        </div>
-        <div class="link-arrow">›</div>
-      </a>
-
-      <a class="link-card" href="https://www.instagram.com/p/DTBchGKE7_A/?hl=ko" target="_blank">
-        <div class="link-icon instagram">📸</div>
-        <div class="link-meta">
-          <div class="link-label">레퍼런스 5 — Instagram</div>
-          <div class="link-url">instagram.com/p/DTBchGKE7_A</div>
-        </div>
-        <div class="link-arrow">›</div>
-      </a>
-
-      <a class="link-card" href="https://www.youtube.com/shorts/F_jJQerNqKg" target="_blank">
-        <div class="link-icon youtube">▶</div>
-        <div class="link-meta">
-          <div class="link-label">레퍼런스 6 — YouTube Shorts</div>
-          <div class="link-url">youtube.com/shorts/F_jJQerNqKg</div>
-        </div>
-        <div class="link-arrow">›</div>
-      </a>
-
-      <a class="link-card" href="https://www.youtube.com/shorts/m1zolLxUvKo" target="_blank">
-        <div class="link-icon youtube">▶</div>
-        <div class="link-meta">
-          <div class="link-label">레퍼런스 7 — YouTube Shorts</div>
-          <div class="link-url">youtube.com/shorts/m1zolLxUvKo</div>
-        </div>
-        <div class="link-arrow">›</div>
-      </a>
+      <div class="notice">
+        <span>💡</span>
+        <div>공동작업자 설정 및 콘텐츠 2차 활용에 동의해 주세요.</div>
+      </div>
 
     </div>
   </div>
 
-  <!-- 6. 추가 안내 -->
-  <div class="section">
-    <div class="section-header"><span class="icon">📢</span> 추가 안내</div>
-    <div class="section-body">
-      <div class="notice-box">
-        <div class="notice-item">
-          <span class="notice-dot">•</span>
-          <span>이번 프로젝트는 쿼드쎄라에서 운영 중인 <strong>포헤르츠(forhz) 브랜드와의 직접적인 협업</strong>입니다.</span>
-        </div>
-        <div class="notice-item">
-          <span class="notice-dot">•</span>
-          <span>캠페인 종료 후, 브랜드 측의 추가 선별을 통해 <strong>쿼드쎄라의 고가 디바이스 제품을 활용한 협업</strong>도 사전 기획되어 있습니다.</span>
-        </div>
-        <div class="notice-item">
-          <span class="notice-dot">•</span>
-          <span>진행하시게 되었을 때 <strong>입체적인 인플루언서 포트폴리오</strong>를 구성하시는 데에 큰 도움이 될 것으로 기대합니다.</span>
-        </div>
+  <!-- 레퍼런스 영상 -->
+  <div class="ux-card">
+    <div class="card-title">💡 레퍼런스 영상</div>
+    <div class="ux-inner-box">
+
+      <div class="state-group">
+        <div class="state-title" style="margin-bottom: 6px; font-size: 12px; color: #4D7A93; font-weight: 700;">Instagram</div>
+        <a class="ref-link" href="https://www.instagram.com/p/DUDe4b7kT-S/?hl=ko" target="_blank">instagram.com/p/DUDe4b7kT-S</a>
+        <a class="ref-link" href="https://www.instagram.com/reels/DCOBYkhJn6g/" target="_blank">instagram.com/reels/DCOBYkhJn6g</a>
+        <a class="ref-link" href="https://www.instagram.com/p/DUC_CJRE5R4/?hl=ko" target="_blank">instagram.com/p/DUC_CJRE5R4</a>
+        <a class="ref-link" href="https://www.instagram.com/p/DTAFy9vkzDG/?hl=ko" target="_blank">instagram.com/p/DTAFy9vkzDG</a>
+        <a class="ref-link" href="https://www.instagram.com/p/DTBchGKE7_A/?hl=ko" target="_blank">instagram.com/p/DTBchGKE7_A</a>
+      </div>
+
+      <div class="state-group" style="margin-bottom: 0;">
+        <div class="state-title" style="margin-bottom: 6px; font-size: 12px; color: #4D7A93; font-weight: 700;">YouTube Shorts</div>
+        <a class="ref-link" href="https://www.youtube.com/shorts/F_jJQerNqKg" target="_blank">youtube.com/shorts/F_jJQerNqKg</a>
+        <a class="ref-link" href="https://www.youtube.com/shorts/m1zolLxUvKo" target="_blank">youtube.com/shorts/m1zolLxUvKo</a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 추가 안내 -->
+  <div class="ux-card" style="margin-bottom: 0;">
+    <div class="card-title">📢 추가 안내</div>
+    <div class="ux-inner-box">
+      <div class="state-group" style="margin-bottom: 0;">
+        <ul class="state-list">
+          <li>이번 프로젝트는 포헤르츠(forhz) 브랜드와의 <strong>직접 협업</strong>입니다.</li>
+          <li>캠페인 종료 후, 추가 선별을 통해 <strong>쿼드쎄라 고가 디바이스 제품 협업</strong>도 사전 기획되어 있습니다.</li>
+          <li>입체적인 인플루언서 포트폴리오 구성에 큰 도움이 될 것으로 기대합니다.</li>
+        </ul>
       </div>
     </div>
   </div>
 
 </div>
 
-<div class="footer">
-  포헤르츠 × 쿼드쎄라 협업 캠페인 &nbsp;|&nbsp; 2026. 04
-</div>
-
+<script>
+  document.querySelectorAll('.copy-pill, .hashtag-pill').forEach(function(el) {
+    el.addEventListener('click', function() {
+      var text = this.dataset.copy || this.innerText.replace('❐', '').trim();
+      navigator.clipboard.writeText(text).then(function() {
+        alert(text + ' 복사 완료! ✨');
+      }).catch(function() {
+        alert('직접 선택해서 복사해주세요!');
+      });
+    });
+  });
+</script>
 </body>
 </html>
